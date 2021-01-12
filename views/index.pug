@@ -1,0 +1,20 @@
+extends layout/main-layout.pug
+
+include mixin/createProduct.pug
+
+block styles
+    link(rel="stylesheet" href="/css/index.css")
+
+block content
+    h1=title
+    h2=message
+
+    include includes/slider.pug
+
+    .row
+        if products.length > 0
+            each product in products
+                +createProduct(product)
+        else
+            h1 Ürün Bulunamadı !...
+

@@ -1,0 +1,14 @@
+extends layout/main-layout.pug
+
+block content
+    h1 LOGIN EKRANI
+    form(method='POST', action='/login')
+        h3 Sicil:
+        br
+        input(type='text', name='sicil')
+        hr
+        h3 parola:
+        br
+        input(type='text', name='parola')
+        hr
+        input(type='submit', value='LOGIN')
