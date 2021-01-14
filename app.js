@@ -22,3 +22,6 @@ app.use(errorController.get404Page);
 app.listen(3000, ()=>{
     console.log('3000 nolu port üzerinden yayınlanıyor.');        
 });
+
+
+//fatih sarıdağ
