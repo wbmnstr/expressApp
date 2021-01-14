@@ -1,12 +1,12 @@
 mixin createProduct(product)
     .col-md-4
         .card.my-3
-            img(src=`/img/${product.image}` alt=`${product.description}`).card-img-top
+            img(src=`/img/${product.imageUrl}` alt=`${product.description}`).card-img-top
             .card-body
                 h4.card-title
                     a(href="#") #{product.name}
                 p.card-text.pt-2 #{product.description}
             .card-footer
                 small.text-muted #{product.price} TL
-                a(href="#").btn.btn-secondary.btn-sm.float-right >> details
+                a(href="#").btn.btn-outline-primary.btn-sm.float-right >> Add to Cart
 
