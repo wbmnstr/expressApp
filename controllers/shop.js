@@ -18,6 +18,12 @@ exports.getProducts = (req, res, next) => {
     });
 }
 
+exports.getProduct = (req, res, next) => {
+    const productId=req.params.productid;
+    console.log(productId);
+    res.redirect('/');
+}
+
 exports.getProductDetails = (req, res, next) => {
     res.render('shop/details', {
         title: 'Details',
