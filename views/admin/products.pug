@@ -1,6 +1,10 @@
 extends ../layout/main-layout.pug
 
 block content
+
+    if(action !== 'undefined' &&action==='edit')
+        .alert.alert-success product has been updated
+
     .row
         if products.length>0
             table.table.table-bordered

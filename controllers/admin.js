@@ -6,7 +6,8 @@ exports.getProducts=(req, res, next) => {
     { 
         title: 'Admin Products', 
         products:products,
-        path:'/admin/products'
+        path:'/admin/products',
+        action:req.query.action
     });
 }
 
@@ -29,12 +30,23 @@ exports.postAddProduct= (req, res, next) => {
 
 
 exports.getEditProduct=(req, res, next) => {
-    res.render('admin/add-product',{
+
+    const product=Product.getById(req.params.productid)
+
+    res.render('admin/edit-product',{
         'title':'Edit Product',
-        'path':'/admin/edit-product'
+        'path':'/admin/products',
+        product:product
     });
 }
 
 exports.postEditProduct= (req, res, next) => {
-    res.redirect('/');
+    const product=Product.getById(req.body.id);
+    product.name=req.body.name;
+    product.price=req.body.price;
+    product.description=req.body.description;
+    product.imageUrl=req.body.imageUrl;
+
+    Product.Update(product);
+    res.redirect('/admin/products?action=edit');
 }
