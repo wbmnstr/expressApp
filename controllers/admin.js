@@ -1,14 +1,19 @@
-const Product = require('../models/product')
-const Category = require('../models/category')
+const Product = require('../models/product');
+const Category = require('../models/category');
 
 exports.getProducts = (req, res, next) => {
-    const products = Product.getAll();
-    res.render('admin/products',
-        {
-            title: 'Admin Products',
-            products: products,
-            path: '/admin/products',
-            action: req.query.action
+
+    Product.getAll()
+        .then(products => {
+            res.render('admin/products', {
+                title: 'Admin Products',
+                products: products[0],
+                path: '/admin/products',
+                action: req.query.action
+            })
+        })
+        .catch((err) => {
+            console.log(err)
         });
 }
 
