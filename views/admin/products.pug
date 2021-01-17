@@ -2,26 +2,33 @@ extends ../layout/main-layout.pug
 
 block content
 
+    if(action!=='undefined' && action==='delete')
+        .alert.alert-danger product has been deleted.
+
     if(action !== 'undefined' &&action==='edit')
-        .alert.alert-success product has been updated
+        .alert.alert-success product has been updated.
 
     .row
         if products.length>0
             table.table.table-bordered
                 thead   
                     tr
-                        th Image
+                        th(style='width:100px') Image
                         th Product Name
-                        th Price
-                        th
+                        th(style='width:150px') Price
+                        th(style='width:133px')
                 tbody
                     each product in products
                         tr
                             td
-                                img(src=`/img/${product.imageUrl}` width='80')
+                                img(src=`/img/${product.imageUrl}` width='110')
                             td #{product.name}
                             td #{product.price} TL
                             td
-                                a.btn.btn-primary.btn-sm(href=`/admin/products/${product.id}`) Edit
+                                a.btn.btn-primary.btn-sm.mr-2(href=`/admin/products/${product.id}`) Edit
+
+                                form(action='/admin/delete-product' method='POST')
+                                    input(type='hidden' name='productid' value=`${product.id}`)
+                                    button(type='submit').btn.btn-danger.btn-sm.ml-1 Delete
         else
             h1 No Product

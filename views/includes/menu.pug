@@ -1,4 +1,7 @@
 .list-group
-    a(href="/").list-group-item anasayfa
-    a(href="/404").list-group-item hata görünümü
-    a(href="/add-product").list-group-item add product
+
+    if categories.length>0 
+        each category in categories 
+            a(href=`/categories/${category.id}` class = category.id === SelectedCategory ? "active" : "").list-group-item #{category.name}
+
+

@@ -4,9 +4,15 @@ include ../mixin/createProduct.pug
 
 block content
     .row
-        if products.length > 0
-            each product in products
-                +createProduct(product)
-        else
-            h1 Ürün Bulunamadı !...
+        .col-md-3
+            include ../includes/menu.pug
+
+        .col-md-9
+            .row
+
+                if products.length > 0
+                    each product in products
+                        +createProduct(product)
+                else
+                    h1 Ürün Bulunamadı !...
 
