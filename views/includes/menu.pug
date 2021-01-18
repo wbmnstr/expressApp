@@ -1,7 +1,8 @@
 .list-group
 
-    if categories.length>0 
+    if categories.length > 0 
         each category in categories 
+            span menudeneme
             a(href=`/categories/${category.id}` class = category.id === SelectedCategory ? "active" : "").list-group-item #{category.name}
 
 
