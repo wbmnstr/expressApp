@@ -27,7 +27,7 @@ block content
             label(for="categoryid").col-sm-2 Category
             .col-sm-10
                 select(name="categoryid").form-control#categoryid
-                    option(value'-1') Select Category
+                    option(value='-1') Select Category
                     each category in categories
                         option(value=`${category.id}` selected=`${category.id===product.categoryid}`) #{category.name}
 
