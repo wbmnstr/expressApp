@@ -1,7 +1,7 @@
 mixin createProduct(product)
     .col-md-4
         .card
-            img(src=`/img/${product.imageUrl}` alt=`${product.description}`).card-img-top
+            img(src=`/img/${product.imageUrl}` height='300' width='150' alt=`${product.description}`).card-img-top
             .card-body
                 h4.card-title
                     a(href=`/products/${product.id}`) #{product.name}                

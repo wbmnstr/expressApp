@@ -52,19 +52,17 @@ exports.getProductsByCategoryId = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
     Product.getById(req.params.productid)
-        .then((product) => {
-            res.render('shop/product-detail', {
-                title: product[0][0].name,
-                product: product[0][0],
-                path: '/products'
-
-            });
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    .then((product)=>{
+        res.render('shop/product-detail', {
+            title: product[0][0].name,
+            product: product[0][0],
+            path: '/products'
+        });  
+    })
+    .catch((err)=>{
+        console.log(err);
+    });
 }
-
 
 exports.getCart = (req, res, next) => {
     res.render('shop/cart', {
