@@ -1,35 +1,55 @@
-const connection = require('../utility/database');
+const Sequelize=require('sequelize');
+const sequelize=require('../utility/database');
 
-module.exports = class Category {
-    constructor(name, description) {
-        this.id = (categories.length + 1).toString();
-        this.name = name;
-        this.description = description;
+const Category=sequelize.define('category',{
+    id:{
+        type:Sequelize.INTEGER,
+        autoIncrement:true,
+        allowNull:false,
+        primaryKey:true
+    },
+    name:Sequelize.STRING,
+    description:{
+        type:Sequelize.STRING,
+        allowNull:true
     }
+});
 
-    saveCategory() {
-        return connection.execute('insert into categories (name,description) values (?,?)',[
-            this.name,
-            this.description
-        ])
-    }
+module.exports=Category;
 
-    static getAll() {
-        return connection.execute('select * from categories');
-    }
 
-    static getById(id) {
-        return connection.execute('select * from categories where id=?',[id]);
-    }
+// const connection = require('../utility/database');
 
-    static update(category) {
-        return connection.execute('update categories set name=?,description=? where id=?',[
-            category.name,
-            category.description
-        ]);
-    }
+// module.exports = class Category {
+//     constructor(name, description) {
+//         this.id = (categories.length + 1).toString();
+//         this.name = name;
+//         this.description = description;
+//     }
 
-    static deleteById(id) {
-        return connection.execute('delete from categories where id=?',[id]);
-    }
-}
+//     saveCategory() {
+//         return connection.execute('insert into categories (name,description) values (?,?)',[
+//             this.name,
+//             this.description
+//         ])
+//     }
+
+//     static getAll() {
+//         return connection.execute('select * from categories');
+//     }
+
+//     static getById(id) {
+//         return connection.execute('select * from categories where id=?',[id]);
+//     }
+
+//     static update(category) {
+//         return connection.execute('update categories set name=?,description=? where id=?',[
+//             category.name,
+//             category.description
+//         ]);
+//     }
+
+//     static deleteById(id) {
+//         return connection.execute('delete from categories where id=?',[id]);
+//     }
+// }
