@@ -3,11 +3,11 @@ const Category = require('../models/category');
 
 exports.getProducts = (req, res, next) => {
 
-    Product.getAll()
+    Product.findAll()
         .then(products => {
             res.render('admin/products', {
                 title: 'Admin Products',
-                products: products[0],
+                products: products,
                 path: '/admin/products',
                 action: req.query.action
             })
@@ -18,34 +18,46 @@ exports.getProducts = (req, res, next) => {
 }
 
 exports.getAddProduct = (req, res, next) => {
-    Category.getAll()
-        .then((categories) => {
-            res.render('admin/add-product', {
-                'title': 'New Product',
-                'path': '/admin/add-product',
-                categories,
-            });
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    res.render('admin/add-product', {
+        title: 'New Product',
+        path: '/admin/add-product',
+    });
 }
 
 exports.postAddProduct = (req, res, next) => {
     const product = new Product();
 
-    product.name = req.body.name;
-    product.price = req.body.price;
-    product.imageUrl = req.body.imageUrl;
-    product.categoryid = req.body.categoryid;
-    product.description = req.body.description;
-
-    product.saveProduct()
-        .then(() => {
-            res.redirect('/admin/products');
-
+    const name = req.body.name;
+    const price = req.body.price;
+    const imageUrl = req.body.imageUrl;
+    const description = req.body.description;
+    // const categoryid = req.body.categoryid;
+    /*
+    Product.create({
+        name: name,
+        price: price,
+        imageUrl: imageUrl,
+        description: description
+    })
+        .then(result => {
+            console.log(result);
+            res.redirect('/');
         })
-        .catch((err) => { console.log(err) });
+        .catch(err => { console.log(err) });
+    */
+
+    const prd=Product.build({
+        name,price,imageUrl,description
+    })
+    prd.save()
+        .then(result=>{
+            console.log(result);
+            res.redirect('/');
+        })
+        .catch(err=>{
+            console.log(err)
+        });
+
 }
 
 
@@ -59,7 +71,7 @@ exports.getEditProduct = (req, res, next) => {
                         'title': 'Edit Product',
                         'path': '/admin/products',
                         product: product[0][0],
-                        categories:categories[0],
+                        categories: categories[0],
                     });
                 })
                 .catch((err) => { console.log(err) });
