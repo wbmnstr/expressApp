@@ -3,11 +3,30 @@ const Category = require('../models/category');
 
 exports.getIndex = (req, res, next) => {
 
+    Product.findAll({
+        attributes: ['id', 'name', 'imageUrl']
+    })
+        .then(products => {
+            Category.findAll()
+                .then(categories => {
+                    res.render('shop/index', {
+                        title: 'Shopping',
+                        products,
+                        categories,
+                        path: '/'
+                    });
+                })
+        })
+        .catch((err) => {
+            console.log(err)
+        });
 }
 
 exports.getProducts = (req, res, next) => {
 
-    Product.findAll()
+    Product.findAll({
+        attributes: ['id', 'name', 'imageUrl']
+    })
         .then(products => {
             Category.findAll()
                 .then(categories => {
@@ -29,30 +48,60 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProductsByCategoryId = (req, res, next) => {
     const categoryid = req.params.categoryid;
-    const products = Product.getProductsByCategoryId(categoryid);
-    const categories = Category.getAll();
 
-    res.render('shop/products', {
-        title: 'Product',
-        products: products,
-        categories,
-        SelectedCategory: categoryid,
-        path: '/products'
-    });
+    const model = [];
+    Category
+        .findAll()
+        .then(categories => {
+            model.categories = categories;
+            const category = categories.find(i => i.id == categoryid);
+            return category.getProducts();
+        })
+        .then(products => {
+            res.render('shop/products', {
+                title: 'Product',
+                products: products,
+                categories: model.categories,
+                SelectedCategory: categoryid,
+                path: '/products'
+            });
+        })
+        .catch(err=>{
+            console.log(err)
+        });
+
 }
 
 exports.getProduct = (req, res, next) => {
-    Product.getById(req.params.productid)
-        .then((product) => {
+
+    Product.findAll({
+        attributes: ['id', 'name', 'imageUrl', 'description'],
+        where: { id: req.params.productid }
+    })
+        .then(products => {
             res.render('shop/product-detail', {
-                title: product[0][0].name,
-                product: product[0][0],
+                title: products[0].name,
+                product: products[0],
                 path: '/products'
             });
         })
         .catch((err) => {
             console.log(err);
         });
+
+    /*
+    Product.findByPk(req.params.productid)
+        .then((product) => {
+            res.render('shop/product-detail', {
+                title: product.name,
+                product: product,
+                path: '/products'
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+        */
 }
 
 exports.getCart = (req, res, next) => {
