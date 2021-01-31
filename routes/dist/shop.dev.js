@@ -1,9 +1,12 @@
-const express = require('express');
-const router = express.Router();
+"use strict";
 
-const shopController = require('../controllers/shop');
+var express = require('express');
 
-//router.get('/', shopController.getIndex);
+var router = express.Router();
+
+var shopController = require('../controllers/shop'); //router.get('/', shopController.getIndex);
+
+
 router.get('/', shopController.getProducts);
 router.get('/products', shopController.getProducts);
 router.get('/products/:productid', shopController.getProduct);
@@ -12,5 +15,4 @@ router.get('/cart', shopController.getCart);
 router.post('/cart', shopController.postCart);
 router.post('/delete-cartitem', shopController.postCartItemDelete);
 router.get('/orders', shopController.getOrders);
-router.post('/create-order', shopController.postOrders);
 module.exports = router;
