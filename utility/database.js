@@ -1,30 +1,24 @@
-const Sequelize=require('sequelize');
-const sequelize=new Sequelize('node-app','root','Mesafa.2011',{
-    dialect:'mysql',
-    host:'localhost'
-});
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
 
-module.exports=sequelize;
+let _db;
 
-/*
-sequelize
-    .authenticate()
-    .then(() => {
-        console.log('Veritabanı bağlantısı başarı ile yapılandırıldı.')
-    })
-    .catch((err) => {
-        console.log(err);
-    });
-*/
+const mongoConnect = (callback) => {
+    //MongoClient.connect('mongodb://localhost/node-app')
+    MongoClient.connect('mongodb+srv://wbmnstr:gMZR6qV6lJOxwD7o@node-app.wj88g.mongodb.net/<dbname>?retryWrites=true&w=majority')
+        .then(client => {
+            console.log("connected.......");
+            _db = client.db();
+            callback(client);
+        })
+        .catch(err => { console.log(err); throw err; })
+}
+const getdb = () => {
+    if (_db) {
+        return _db;
+    }
+    throw 'No Database';
+}
 
-
-// const mysql=require('mysql2');
-
-// const connection=mysql.createConnection({
-//     host:'localhost',
-//     user:'root',
-//     database:'node-app',
-//     password:'Mesafa.2011'
-// });
-
-// module.exports=connection.promise();
+exports.mongoConnect = mongoConnect;
+exports.getdb = getdb;
