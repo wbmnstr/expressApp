@@ -46,27 +46,19 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getEditProduct = (req, res, next) => {
 
-    Product.findByPk(req.params.productid)
-        .then((product) => {
-            if (!product) {
-                return res.redirect('/');
-            }
+    Product.findById(req.params.productid)
+        .then(product => {
+            console.log(product);
 
-            Category.findAll()
-                .then((categories) => {
-                    res.render('admin/edit-product', {
-                        'title': 'Edit Product',
-                        'path': '/admin/products',
-                        product: product,
-                        categories: categories,
-                    });
-                })
-                .catch((err) => { console.log(err) });
+            res.render('admin/edit-product', {
+                'title': 'Edit Product',
+                'path': '/admin/products',
+                product: product
+            });
 
         })
-        .catch((err) => {
-            console.log(err);
-        });
+        .catch(err => { console.log(err) })
+
 
 }
 
