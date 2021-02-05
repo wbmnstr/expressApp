@@ -70,19 +70,12 @@ exports.postEditProduct = (req, res, next) => {
     const price = req.body.price;
     const description = req.body.description;
     const imageUrl = req.body.imageUrl;
-    const categoryid = req.body.categoryid;
+    //const categoryid = req.body.categoryid;
 
-    Product.findByPk(id)
-        .then(product => {
-            product.name = name;
-            product.price = price;
-            product.imageUrl = imageUrl;
-            product.description = description;
-            product.categoryId = categoryid;
-            return product.save();
-        })
+    const product=new Product(name,price,description,imageUrl,id);
+
+    product.save()
         .then(result => {
-            console.log('updated');
             res.redirect('/admin/products?action=edit')
         })
         .catch(err => console.log(err));
@@ -91,11 +84,8 @@ exports.postEditProduct = (req, res, next) => {
 exports.postDeleteProduct = (req, res, next) => {
     const id = req.body.productid;
 
-    Product.FindByPk(id)
-        .then(product => {
-            return product.destroy();
-        })
-        .then(result => {
+    Product.deleteById(id)
+        .then(() => {
             console.log('product hass been deleted.');
             res.redirect('/admin/products?action=delete');
         })
