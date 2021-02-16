@@ -1,0 +1,33 @@
+ mongodb 
+ 
+ operatörleri (sql > where durumları)
+
+$eq = equal 
+$ne = not equal
+$gt = greater than
+$gte = greater than or equal
+$lt = less than
+$lte = less than or equal
+$in = in çoklu eşitlik gibi kullanımı dizi şeklinde parametre iledir
+$nin = not in
+
+.find({price:{$eq:2000}}) price 2000 e eşit olan kayıtlar
+.find({price:{$in:[1000,2000,5000]}}) price 2000 e eşit olan kayıtlar
+
+(and) find içinde kriterler sıralı olarak gönderilirse and gibi değerlendirilir
+.find({name:'samsung s6', price:{$gt:2000}})
+
+(or) or şeklinde kullanım için find içinde değil de or() metodu içinde kriterler kullanılır.
+.find().or({name:'samsung s6', price:{$gt:2000}})
+
+starts with = .find({name:/^Samsung/}) Samsung ibaresi ile başlayan demek
+ends with   = .find({name:/Samsung$/})
+contains    = .find({name:/.*Samsung.*/})
+
+
+/************************************************************/
+
+// .find({name:'iphone 6', price:10000}) // sql de where e karşılık gelir
+// .limit(10) // sql de limit e karşılık gelir
+// .sort({name:1}) // sql de sort by a karşılık gelir asc 1 iken desc -1 dir
+// .select({name:1, price:1}) // sql select e karşılık gelir, seçili alanlar getirilir boş geçerseniz sql deki * yerine geçer 
