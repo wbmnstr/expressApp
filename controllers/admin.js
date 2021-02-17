@@ -1,4 +1,4 @@
-const SZÇB<j3i  v  ,x9/Product = require('../models/product');
+const Product = require('../models/product');
 const Category = require('../models/category');
 
 exports.getProducts = (req, res, next) => {
@@ -36,7 +36,8 @@ exports.postAddProduct = (req, res, next) => {
         name,
         price,
         description,
-        imageUrl
+        imageUrl,
+        userId:req.user
     });
 
     product.save()
@@ -52,7 +53,7 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getEditProduct = (req, res, next) => {
 
-/+/    Product.findById(req.params.productid)
+    Product.findById(req.params.productid)
         .then(product => {
             res.render('admin/edit-product', {
                 'title': 'Edit Product',
@@ -62,7 +63,6 @@ exports.getEditProduct = (req, res, next) => {
         })
         .catch(err => { console.log(err) });
 }
-dddddddddddsggfdfsdxzxxzasawdzzazzazxdddddz<aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa          "   XZCCCCCCCCCCCCCCCCCC DDDDDDDDF                   CV<ZSASSASSAWE3WE3WE3E33WEEEEEEEEEEEEWWWWWWWWWWWWWWWWWSWERTÖMNBVX<ZXVNMÖ.ÇŞLKASDFGHJJHDCDDXDDDDDCXRDDXCFGHRTUIOPĞÜIU7Y678UOIUYTRE"1234                                                      ÖMN
 
 exports.postEditProduct = (req, res, next) => {
     
