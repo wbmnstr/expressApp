@@ -23,13 +23,13 @@ block content
             .col-sm-10
                 input(type="text" name="imageUrl" value=`${product.imageUrl}`).form-control#image
 
-        //- .form-group.row
-        //-     label(for="categoryid").col-sm-2 Category
-        //-     .col-sm-10
-        //-         each category in categories
-        //-             label
-        //-                 input(type="checkbox" name="categoryids" value=`${category._id}` checked=category.selected)
-        //-                 |  #{category.name}
+        .form-group.row
+            label(for="categoryid").col-sm-2 Category
+            .col-sm-10
+                each category in categories
+                    label
+                        input(type="checkbox" name="categoryids" value=`${category._id}` checked=category.selected)
+                        |  #{category.name}
                     br
 
         .form-group.row

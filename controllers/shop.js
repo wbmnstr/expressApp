@@ -4,10 +4,14 @@ const Category = require('../models/category');
 exports.getIndex = (req, res, next) => {
     Product.find()
         .then(products => {
-            res.render('shop/index', {
-                title: 'Shopping',
-                products,
-                path: '/',
+            Category.find()
+            .then(categories=>{
+                res.render('shop/index', {
+                    title: 'Shopping',
+                    products,
+                    categories,
+                    path: '/',
+                });
             });
         })
         .catch((err) => {
@@ -19,13 +23,19 @@ exports.getProducts = (req, res, next) => {
 
     Product.find()
         .then(products => {
-
-            res.render('shop/products', {
-                title: 'Products',
-                products,
-                path: '/',
+            return products
+        })
+        .then(products=>{
+            Category.find()
+            .then(categories=>{
+                res.render('shop/products', {
+                    title: 'Products',
+                    products,
+                    categories,
+                    path: '/',
+                })
+    
             })
-
         })
         .catch((err) => {
             console.log(err)
@@ -34,13 +44,15 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProductsByCategoryId = (req, res, next) => {
     const categoryid = req.params.categoryid;
-
     const model = [];
+
     Category
         .find()
         .then(categories => {
             model.categories = categories;
-            return Product.findByCategoryId(categoryid);
+            return Product.find({
+                categories:categoryid
+            });
         })
         .then(products => {
             res.render('shop/products', {
@@ -74,13 +86,14 @@ exports.getProduct = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
     req.user
-        .getCart()
-        .then(products => {
-            console.log(products);
+        .populate('cart.items.productId')
+        .execPopulate()
+        .then(user => {
+            console.log(user.cart.items);
             res.render('shop/cart', {
                 title: 'Cart',
                 path: '/cart',
-                products: products,
+                products: user.cart.items,
             });
         })
         .catch(err => {
