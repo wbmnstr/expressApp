@@ -12,13 +12,14 @@ const orderSchema = new mongoose.Schema({
             required: true
         },
         email: {
-            type: String
+            type: String,
+            required:true
         },
 
     },
     items:[{
         product: {
-            type: Product,
+            type: Object,
             required: true,
         },
         quantity: {
