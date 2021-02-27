@@ -9,14 +9,18 @@ app.set('views', './views');
 
 const adminRoutes = require('./routes/admin');
 const userRoutes = require('./routes/shop');
+const accountRoutes = require('./routes/account');
 
 const mongoose=require('mongoose');
+const cookieParser=require('cookie-parser');
+
 
 const errorController = require('./controllers/errors');
 
 const User = require('./models/user');
 
 app.use(bodyPraser.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req,res,next)=>{
@@ -31,6 +35,7 @@ app.use((req,res,next)=>{
 
 app.use('/admin', adminRoutes);
 app.use(userRoutes);
+app.use(accountRoutes);
 app.use(errorController.get404Page);
 
 //mongoose.connect('mongodb://localhost/node-app')// local bağlantı

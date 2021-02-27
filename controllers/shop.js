@@ -3,6 +3,8 @@ const Category = require('../models/category');
 const Order = require('../models/order');
 
 exports.getIndex = (req, res, next) => {
+    //console.log(req.isAuthenticated);
+    console.log(req.cookies.isAuthenticated);
     Product.find()
         .then(products => {
             Category.find()
@@ -12,6 +14,7 @@ exports.getIndex = (req, res, next) => {
                         products,
                         categories,
                         path: '/',
+                        isAuthenticated:req.cookies.isAuthenticated==='true'
                     });
                 });
         })
